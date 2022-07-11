@@ -1,0 +1,20 @@
+{
+  "name": "movie-app",
+  "version": "1.0.0",
+  "description": "Consuming The movie API with JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raycris/movie-app.git"
+  },
+  "keywords": [],
+  "author": "@raycris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raycris/movie-app/issues"
+  },
+  "homepage": "https://github.com/raycris/movie-app#readme"
+}
