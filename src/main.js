@@ -15,11 +15,9 @@ const getTrendingMoviesPreview = async () => {
   const { data } = await api("trending/movie/day");
   const movies = data.results;
 
-  movies.map((movie) => {
-    const trendingMoviesPreviewList = document.querySelector(
-      "#trendingPreview .trendingPreview-movieList"
-    );
+  trendingMoviesPreviewList.innerHTML = "";
 
+  movies.map((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
 
@@ -37,11 +35,8 @@ const getCategoriesPreview = async () => {
   const { data } = await api("genre/movie/list");
   const categories = data.genres;
 
+  categoriesPreviewList.innerHTML = "";
   categories.map((category) => {
-    const categoriesPreviewList = document.querySelector(
-      "#categoriesPreview .categoriesPreview-list"
-    );
-
     const categoryContainer = document.createElement("div");
     categoryContainer.classList.add("category-container");
 
@@ -56,8 +51,6 @@ const getCategoriesPreview = async () => {
     categoriesPreviewList.appendChild(categoryContainer);
   });
 };
-
-
 
 // function solution(n) {
 //   let array = [];
