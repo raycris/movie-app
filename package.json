@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/raycris/movie-app/issues"
   },
-  "homepage": "https://github.com/raycris/movie-app#readme"
+  "homepage": "https://github.com/raycris/movie-app#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }
