@@ -44,8 +44,8 @@ function trendsPage() {
   genericSection.classList.remove("inactive");
   movieDetailSection.classList.add("inactive");
 
-headerCategoryTitle.innerHTML = "Tendencias"
-  getTrendingMovies()
+  headerCategoryTitle.innerHTML = "Tendencias";
+  getTrendingMovies();
 }
 
 function searchPage() {
@@ -66,7 +66,7 @@ function searchPage() {
   // split para sacar el id desde la URL
 
   const [_, searchValue] = location.hash.split("=");
-  getMoviesBySearch(searchValue)
+  getMoviesBySearch(searchValue);
 }
 
 function movieDetailsPage() {
@@ -84,6 +84,10 @@ function movieDetailsPage() {
   categoriesPreviewSection.classList.add("inactive");
   genericSection.classList.add("inactive");
   movieDetailSection.classList.remove("inactive");
+
+  // ["#movie", "movideID"]
+  const [_, movieId] = location.hash.split("=");
+  getMovieById(movieId);
 }
 
 function categoriesPage() {

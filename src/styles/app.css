@@ -96,6 +96,12 @@ button {
   cursor: pointer;
 }
 
+img {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 /* Shared */
 .header-container,
 .trendingPreview-header,

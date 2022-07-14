@@ -19,7 +19,7 @@ const getTrendingMoviesPreview = async () => {
   const { data } = await api("trending/movie/day");
 
   const movies = data.results;
-  printMoviePosters(movies, trendingMoviesPreviewList);
+  createMovies(movies, trendingMoviesPreviewList);
 };
 
 const getMoviesByCategory = async (genreId) => {
@@ -30,7 +30,7 @@ const getMoviesByCategory = async (genreId) => {
   });
 
   const movies = data.results;
-  printMoviePosters(movies, genericSection);
+  createMovies(movies, genericSection);
 };
 
 const getMoviesBySearch = async (query) => {
@@ -41,29 +41,60 @@ const getMoviesBySearch = async (query) => {
   });
 
   const movies = data.results;
-  printMoviePosters(movies, genericSection);
+  createMovies(movies, genericSection);
 };
 
 const getTrendingMovies = async () => {
   const { data } = await api("trending/movie/day");
 
   const movies = data.results;
-  printMoviePosters(movies, genericSection);
+  createMovies(movies, genericSection);
+};
+
+const getMovieById = async (id) => {
+  const { data: movie } = await api(`movie/${id}`);
+
+  const movieImgUrl = `${BASE_IMG_URL500}${movie.poster_path}`;
+
+  headerSection.style.background = `
+  linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35) 19.27%,
+    rgba(0, 0, 0, 0) 29.17%
+  ),
+  url(${movieImgUrl})`;
+
+  movieDetailTitle.textContent = movie.title;
+  movieDetailDescription.textContent = movie.overview;
+  movieDetailScore.textContent = movie.vote_average;
+
+  createCategories(movie.genres, movieDetailCategoriesList);
+  getSimilarMoviesById(id)
+};
+
+const getSimilarMoviesById = async (id) => {
+  const { data } = await api(`movie/${id}/similar`);
+  const relatedMovies = data.results
+
+  createMovies(relatedMovies, relatedMoviesContainer)
 };
 
 // UTILS
 
-const printMoviePosters = (movies, genericSection) => {
+const createMovies = (movies, genericSection) => {
   genericSection.innerHTML = "";
 
   movies.map((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
+    movieContainer.addEventListener("click", () => {
+      location.hash = `#movie=${movie.id}`;
+    });
 
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.setAttribute("alt", movie.title);
-    movieImg.setAttribute("src", `${BASE_IMG_URL}${movie.poster_path}`);
+    movieImg.setAttribute("src", `${BASE_IMG_URL300}${movie.poster_path}`);
 
     movieContainer.appendChild(movieImg);
     genericSection.appendChild(movieContainer);
@@ -90,6 +121,8 @@ const createCategories = (categories, container) => {
     container.appendChild(categoryContainer);
   });
 };
+
+
 
 // function solution(n) {
 //   let array = [];
