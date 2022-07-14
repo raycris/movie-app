@@ -5,7 +5,7 @@ trendingBtn.addEventListener("click", () => {
   location.hash = "#trends";
 });
 arrowBtn.addEventListener("click", () => {
-  location.hash = "#home";
+  location.hash = window.history.back();
 });
 
 window.addEventListener("DOMContentLoaded", navigator, false);
