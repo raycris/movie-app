@@ -1,6 +1,12 @@
-searchFormBtn.addEventListener("click", ()=>{location.hash="#search="})
-trendingBtn.addEventListener("click", ()=>{location.hash="#trends"})
-arrowBtn.addEventListener("click", ()=>{location.hash="#home"})
+searchFormBtn.addEventListener("click", () => {
+  location.hash = "#search=";
+});
+trendingBtn.addEventListener("click", () => {
+  location.hash = "#trends";
+});
+arrowBtn.addEventListener("click", () => {
+  location.hash = "#home";
+});
 
 window.addEventListener("DOMContentLoaded", navigator, false);
 window.addEventListener("hashchange", navigator, false);
@@ -36,6 +42,7 @@ function trendsPage() {
   genericSection.classList.remove("inactive");
   movieDetailSection.classList.add("inactive");
 }
+
 function searchPage() {
   console.log("search");
   headerSection.classList.remove("header-container--long");
@@ -51,9 +58,9 @@ function searchPage() {
   genericSection.classList.remove("inactive");
   movieDetailSection.classList.add("inactive");
 }
+
 function movieDetailsPage() {
   console.log("movie");
-  
 
   headerSection.classList.add("header-container--long");
   // headerSection.style.background = "";
@@ -68,6 +75,7 @@ function movieDetailsPage() {
   genericSection.classList.add("inactive");
   movieDetailSection.classList.remove("inactive");
 }
+
 function categoriesPage() {
   console.log("categories");
   headerSection.classList.remove("header-container--long");
@@ -82,7 +90,17 @@ function categoriesPage() {
   categoriesPreviewSection.classList.add("inactive");
   genericSection.classList.remove("inactive");
   movieDetailSection.classList.add("inactive");
+
+  // split para sacar el id desde la URL
+
+  const [_, categoryData] = location.hash.split("=");
+  const [categoryId, categoryName] = categoryData.split("-");
+  const uncodeName = decodeURI(categoryName);
+  const uncodeId = decodeURI(categoryId);
+  headerCategoryTitle.innerHTML = uncodeName
+  getMoviesByCategory(uncodeId);
 }
+
 function homePage() {
   console.log("Home");
   headerSection.classList.remove("header-container--long");
