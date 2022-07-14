@@ -1,6 +1,3 @@
-// const API_URL = `https://api.themoviedb.org/3/trending/movie/day?api_key=`;
-// const API_URL_CATEGORIES = `https://api.themoviedb.org/3/genre/movie/list?api_key=`;
-
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
   headers: {
@@ -11,29 +8,11 @@ const api = axios.create({
   },
 });
 
+// LLamados a la API
 const getCategoriesPreview = async () => {
   const { data } = await api("genre/movie/list");
   const categories = data.genres;
-
-  categoriesPreviewList.innerHTML = "";
-  categories.map((category) => {
-    const categoryContainer = document.createElement("div");
-    categoryContainer.classList.add("category-container");
-
-    const categoryTitle = document.createElement("h3");
-    categoryTitle.classList.add("category-title");
-    categoryTitle.addEventListener("click", () => {
-      location.hash = `#category=${category.id} - ${category.name}`;
-      window.scrollTo(0, 0);
-    });
-    categoryTitle.setAttribute("id", category.id);
-
-    const categoryTitleText = document.createTextNode(category.name);
-
-    categoryTitle.appendChild(categoryTitleText);
-    categoryContainer.appendChild(categoryTitle);
-    categoriesPreviewList.appendChild(categoryContainer);
-  });
+  createCategories(categories, categoriesPreviewList);
 };
 
 const getTrendingMoviesPreview = async () => {
@@ -54,6 +33,19 @@ const getMoviesByCategory = async (genreId) => {
   printMoviePosters(movies, genericSection);
 };
 
+const getMoviesBySearch = async (query) => {
+  const { data } = await api(`search/movie`, {
+    params: {
+      query,
+    },
+  });
+
+  const movies = data.results;
+  printMoviePosters(movies, genericSection);
+};
+
+// UTILS
+
 const printMoviePosters = (movies, genericSection) => {
   genericSection.innerHTML = "";
 
@@ -68,6 +60,27 @@ const printMoviePosters = (movies, genericSection) => {
 
     movieContainer.appendChild(movieImg);
     genericSection.appendChild(movieContainer);
+  });
+};
+
+const createCategories = (categories, container) => {
+  container.innerHTML = "";
+  categories.map((category) => {
+    const categoryContainer = document.createElement("div");
+    categoryContainer.classList.add("category-container");
+
+    const categoryTitle = document.createElement("h3");
+    categoryTitle.classList.add("category-title");
+    categoryTitle.addEventListener("click", () => {
+      location.hash = `#category=${category.id} - ${category.name}`;
+    });
+    categoryTitle.setAttribute("id", category.id);
+
+    const categoryTitleText = document.createTextNode(category.name);
+
+    categoryTitle.appendChild(categoryTitleText);
+    categoryContainer.appendChild(categoryTitle);
+    container.appendChild(categoryContainer);
   });
 };
 
