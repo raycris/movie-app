@@ -44,6 +44,13 @@ const getMoviesBySearch = async (query) => {
   printMoviePosters(movies, genericSection);
 };
 
+const getTrendingMovies = async () => {
+  const { data } = await api("trending/movie/day");
+
+  const movies = data.results;
+  printMoviePosters(movies, genericSection);
+};
+
 // UTILS
 
 const printMoviePosters = (movies, genericSection) => {
