@@ -19,7 +19,7 @@ const getTrendingMoviesPreview = async () => {
   const { data } = await api("trending/movie/day");
 
   const movies = data.results;
-  createMovies(movies, trendingMoviesPreviewList);
+  createMovies(movies, trendingMoviesPreviewList, true);
 };
 
 const getMoviesByCategory = async (genreId) => {
@@ -30,7 +30,7 @@ const getMoviesByCategory = async (genreId) => {
   });
 
   const movies = data.results;
-  createMovies(movies, genericSection);
+  createMovies(movies, genericSection, true);
 };
 
 const getMoviesBySearch = async (query) => {
@@ -69,19 +69,28 @@ const getMovieById = async (id) => {
   movieDetailScore.textContent = movie.vote_average;
 
   createCategories(movie.genres, movieDetailCategoriesList);
-  getSimilarMoviesById(id)
+  getSimilarMoviesById(id);
 };
 
 const getSimilarMoviesById = async (id) => {
   const { data } = await api(`movie/${id}/similar`);
-  const relatedMovies = data.results
+  const relatedMovies = data.results;
 
-  createMovies(relatedMovies, relatedMoviesContainer)
+  createMovies(relatedMovies, relatedMoviesContainer);
 };
 
 // UTILS
 
-const createMovies = (movies, genericSection) => {
+const lazyLoader = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const url = entry.target.getAttribute("data-img");
+      entry.target.setAttribute("src", url);
+    }
+  });
+});
+
+const createMovies = (movies, genericSection, lazyLoad = false) => {
   genericSection.innerHTML = "";
 
   movies.map((movie) => {
@@ -94,8 +103,20 @@ const createMovies = (movies, genericSection) => {
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.setAttribute("alt", movie.title);
-    movieImg.setAttribute("src", `${BASE_IMG_URL300}${movie.poster_path}`);
+    movieImg.setAttribute(
+      lazyLoad ? "data-img" : "src",
+      `${BASE_IMG_URL300}${movie.poster_path}`
+    );
+    movieImg.addEventListener("error", () => {
+      movieImg.setAttribute(
+        "src",
+        "https://i.pinimg.com/originals/40/69/40/406940cf5a94900e473080549db11d43.jpg"
+      );
+    });
 
+    if (lazyLoad) {
+      lazyLoader.observe(movieImg);
+    }
     movieContainer.appendChild(movieImg);
     genericSection.appendChild(movieContainer);
   });
@@ -121,8 +142,6 @@ const createCategories = (categories, container) => {
     container.appendChild(categoryContainer);
   });
 };
-
-
 
 // function solution(n) {
 //   let array = [];
