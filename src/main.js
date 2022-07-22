@@ -1,4 +1,3 @@
-
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
   headers: {
@@ -48,23 +47,18 @@ const getMoviesBySearch = async (query) => {
 const getTrendingMovies = async () => {
   const { data } = await api("trending/movie/day");
   const movies = data.results;
+  maxPage = data.total_pages;
 
   createMovies(movies, genericSection, { lazyLoad: true, clean: true });
-
-  // const btnLoadMore = document.createElement("button");
-  // btnLoadMore.innerText = "Cargar mas";
-  // btnLoadMore.addEventListener("click", getPaginatedTrendingMovies);
-  // genericSection.appendChild(btnLoadMore);
 };
-
-// window.addEventListener("scroll", getPaginatedTrendingMovies)
 
 const getPaginatedTrendingMovies = async () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-  const scrollIsBottom = (scrollTop + clientHeight) >= (scrollHeight - 15);
+  const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 15;
+  const pageIsNotMax = page < maxPage;
 
-  if (scrollIsBottom) {
-    page++
+  if (scrollIsBottom && pageIsNotMax) {
+    page++;
     const { data } = await api("trending/movie/day", {
       params: {
         page,
@@ -74,11 +68,6 @@ const getPaginatedTrendingMovies = async () => {
 
     createMovies(movies, genericSection, { lazyLoad: true, clean: false });
   }
-
-  // const btnLoadMore = document.createElement("button");
-  // btnLoadMore.innerText = "Cargar mas";
-  // btnLoadMore.addEventListener("click", getPaginatedTrendingMovies);
-  // genericSection.appendChild(btnLoadMore);
 };
 
 const getMovieById = async (id) => {
