@@ -1,3 +1,4 @@
+let page = 1;
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
   headers: {
@@ -46,9 +47,31 @@ const getMoviesBySearch = async (query) => {
 
 const getTrendingMovies = async () => {
   const { data } = await api("trending/movie/day");
-
   const movies = data.results;
-  createMovies(movies, genericSection);
+
+  createMovies(movies, genericSection, { lazyLoad: true, clean: true });
+
+  const btnLoadMore = document.createElement("button");
+  btnLoadMore.innerText = "Cargar mas";
+  btnLoadMore.addEventListener("click", getPaginatedTrendingMovies);
+  genericSection.appendChild(btnLoadMore);
+};
+
+const getPaginatedTrendingMovies = async () => {
+  page++;
+  const { data } = await api("trending/movie/day", {
+    params: {
+      page,
+    },
+  });
+  const movies = data.results;
+
+  createMovies(movies, genericSection, { lazyLoad: true, clean: false });
+
+  const btnLoadMore = document.createElement("button");
+  btnLoadMore.innerText = "Cargar mas";
+  btnLoadMore.addEventListener("click", getPaginatedTrendingMovies);
+  genericSection.appendChild(btnLoadMore);
 };
 
 const getMovieById = async (id) => {
@@ -90,8 +113,14 @@ const lazyLoader = new IntersectionObserver((entries) => {
   });
 });
 
-const createMovies = (movies, genericSection, lazyLoad = false) => {
-  genericSection.innerHTML = "";
+const createMovies = (
+  movies,
+  container,
+  { lazyLoad = false, clean = true } = {}
+) => {
+  if (clean) {
+    container.innerHTML = "";
+  }
 
   movies.map((movie) => {
     const movieContainer = document.createElement("div");
@@ -118,7 +147,7 @@ const createMovies = (movies, genericSection, lazyLoad = false) => {
       lazyLoader.observe(movieImg);
     }
     movieContainer.appendChild(movieImg);
-    genericSection.appendChild(movieContainer);
+    container.appendChild(movieContainer);
   });
 };
 
