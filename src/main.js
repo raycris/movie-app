@@ -1,3 +1,4 @@
+// DATA
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
   headers: {
@@ -7,6 +8,27 @@ const api = axios.create({
     api_key: API_KEY,
   },
 });
+
+const likedMoviesList = () => {
+  const item = JSON.parse(localStorage.getItem("liked_movies"));
+  let movies;
+  if (item) {
+    movies = item;
+  } else {
+    movies = {};
+  }
+  return movies;
+};
+
+function likeMovie(movie) {
+  const likedMovies = likedMoviesList();
+  if (likedMovies[movie.id]) {
+    likedMovies[movie.id] = undefined;
+  } else {
+    likedMovies[movie.id] = movie;
+  }
+  localStorage.setItem("liked_movies", JSON.stringify(likedMovies));
+}
 
 // LLamados a la API
 const getCategoriesPreview = async () => {
@@ -165,7 +187,9 @@ const createMovies = (
   movies.map((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
-    
+    movieContainer.addEventListener("click", () => {
+      location.hash = `#movie=${movie.id}`;
+    });
 
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
@@ -174,9 +198,6 @@ const createMovies = (
       lazyLoad ? "data-img" : "src",
       `${BASE_IMG_URL300}${movie.poster_path}`
     );
-    movieImg.addEventListener("click", () => {
-      location.hash = `#movie=${movie.id}`;
-    });
     movieImg.addEventListener("error", () => {
       movieImg.setAttribute(
         "src",
@@ -186,10 +207,12 @@ const createMovies = (
 
     const movieFvoriteBtn = document.createElement("button");
     movieFvoriteBtn.classList.add("movie-btn");
-    movieFvoriteBtn.addEventListener("click", () => {
+    movieFvoriteBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
       movieFvoriteBtn.classList.toggle("movie-btn--liked");
       // PAra lcoal storage
-    })
+      likeMovie(movie);
+    });
 
     if (lazyLoad) {
       lazyLoader.observe(movieImg);
