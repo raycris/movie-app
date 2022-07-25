@@ -105,23 +105,26 @@ img {
 /* Shared */
 .header-container,
 .trendingPreview-header,
-.categoriesPreview-container {
+.categoriesPreview-container,
+.liked-header {
   padding: 0 24px;
 }
 
 .trendingPreview-container,
 .categoriesPreview-container,
-footer {
+.liked-container footer {
   margin-top: 48px;
 }
 
 .trendingPreview-header,
-.categoriesPreview-title {
+.categoriesPreview-title,
+.liked-header {
   margin-bottom: 24px;
 }
 
 .movie-container {
   cursor: pointer;
+  position: relative;
 }
 .movie-container--loading {
   background: var(--yellow-medium-2);
@@ -145,6 +148,30 @@ footer {
 .movie-img {
   min-height: 175px;
   border-radius: 8px;
+}
+
+.movie-btn {
+  top: 6px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  border-radius: 30px;
+}
+
+.movie-btn::before {
+  content: "🤍";
+}
+
+.movie-btn--liked {
+  background-color: var(--yellow-medium-2);
+  box-shadow: 0 0 10px 2px var(--subtitle-font-color);
+}
+
+.movie-btn--liked::before {
+  content: "💛";
 }
 
 .categoriesPreview-list,
@@ -237,7 +264,8 @@ footer {
 }
 
 /* Trending */
-.trendingPreview-header {
+.trendingPreview-header,
+.liked-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -249,7 +277,8 @@ footer {
   width: 72px;
 }
 
-.trendingPreview-movieList {
+.trendingPreview-movieList,
+.liked-movieList {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
@@ -258,12 +287,15 @@ footer {
   padding-bottom: 16px;
 }
 
-.trendingPreview-movieList .movie-container {
+.trendingPreview-movieList .movie-container,
+.liked-container,
+.movie-container {
   display: inline-block;
   margin-right: 8px;
 }
 
-.trendingPreview-movieList .movie-container .movie-img {
+.trendingPreview-movieList .movie-container .movie-img,
+.liked-movieList .movie-container .movie-img {
   height: 225px;
   min-height: 225px;
   max-height: 225px;

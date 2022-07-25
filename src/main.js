@@ -165,9 +165,7 @@ const createMovies = (
   movies.map((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
-    movieContainer.addEventListener("click", () => {
-      location.hash = `#movie=${movie.id}`;
-    });
+    
 
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
@@ -176,6 +174,9 @@ const createMovies = (
       lazyLoad ? "data-img" : "src",
       `${BASE_IMG_URL300}${movie.poster_path}`
     );
+    movieImg.addEventListener("click", () => {
+      location.hash = `#movie=${movie.id}`;
+    });
     movieImg.addEventListener("error", () => {
       movieImg.setAttribute(
         "src",
@@ -183,10 +184,18 @@ const createMovies = (
       );
     });
 
+    const movieFvoriteBtn = document.createElement("button");
+    movieFvoriteBtn.classList.add("movie-btn");
+    movieFvoriteBtn.addEventListener("click", () => {
+      movieFvoriteBtn.classList.toggle("movie-btn--liked");
+      // PAra lcoal storage
+    })
+
     if (lazyLoad) {
       lazyLoader.observe(movieImg);
     }
     movieContainer.appendChild(movieImg);
+    movieContainer.appendChild(movieFvoriteBtn);
     container.appendChild(movieContainer);
   });
 };
