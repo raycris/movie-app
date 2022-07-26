@@ -224,6 +224,7 @@ const createMovies = (
       movieFvoriteBtn.classList.toggle("movie-btn--liked");
       // PAra lcoal storage
       likeMovie(movie);
+      getLikedMovies()
     });
 
     if (lazyLoad) {
