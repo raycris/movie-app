@@ -2,6 +2,12 @@ let page = 1;
 let infiniteScroll;
 let maxPage;
 
+let lang = 'es';
+language.addEventListener('click', () => {
+  lang = language.value;
+  homePage();
+})
+
 searchFormBtn.addEventListener("click", () => {
   location.hash = `#search=${searchFormInput.value}`;
 });
