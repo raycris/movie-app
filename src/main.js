@@ -164,6 +164,16 @@ const getSimilarMoviesById = async (id) => {
   createMovies(relatedMovies, relatedMoviesContainer);
 };
 
+const getLikedMovies = () => {
+  const likedMovies = likedMoviesList();
+  const moviesArrays = Object.values(likedMovies);
+
+  createMovies(moviesArrays, likedMoviesListArticle, {
+    lazyLoad: true,
+    clean: true,
+  });
+};
+
 // UTILS
 
 const lazyLoader = new IntersectionObserver((entries) => {
@@ -207,6 +217,8 @@ const createMovies = (
 
     const movieFvoriteBtn = document.createElement("button");
     movieFvoriteBtn.classList.add("movie-btn");
+    likedMoviesList()[movie.id] &&
+      movieFvoriteBtn.classList.add("movie-btn--liked");
     movieFvoriteBtn.addEventListener("click", (event) => {
       event.stopPropagation();
       movieFvoriteBtn.classList.toggle("movie-btn--liked");
