@@ -24,6 +24,15 @@
   max-width: 288px;
 }
 
-footer {
-    text-align: end;
-  }
+.movieDetail-container {
+  width: 100%;
+  height: 100%;
+}
+
+.relatedMovies-scrollContainer {
+  width: auto;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: center;
+}
