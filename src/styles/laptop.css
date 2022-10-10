@@ -1,0 +1,52 @@
+.header-searchForm {
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+
+.trendingPreview-movieList,
+.liked-movieList {
+  height: auto;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.genericList-container {
+  gap: 6px;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.movie-container {
+  min-width: 150px;
+  max-width: 150px;
+  margin-bottom: 12px;
+}
+
+.inactive {
+  display: none;
+}
+
+.categoriesPreview-list {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.category-container {
+  width: 90%;
+  max-width: 800px;
+}
+
+.footer-container{
+  display: flex;
+  font-weight: bold;
+  padding-right: 8px;
+  justify-content: flex-end;
+
+}

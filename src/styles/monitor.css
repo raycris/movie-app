@@ -1,0 +1,29 @@
+.genericList-container {
+  gap: 6px;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.inactive {
+  display: none;
+}
+
+.categoriesPreview-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-container {
+  width: 300px;
+  margin: 0 6px;
+  max-width: 288px;
+}
+
+footer {
+    text-align: end;
+  }

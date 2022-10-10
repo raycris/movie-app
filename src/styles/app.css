@@ -36,13 +36,14 @@ html {
 }
 
 body {
-  background-color: var(--background-color);
   color: var(--pills-font-color);
-  font-family: var(--font-family-text);
-  font-weight: var(--font-weight-text1);
-  font-size: 16px;
   margin: 4px 0 0 0;
   padding: 0;
+  font-size: 16px;
+  min-width: 288px;
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-text1);
+  background-color: var(--background-color);
 }
 
 h1,
@@ -243,11 +244,12 @@ img {
 }
 
 .header-searchForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
+  display: flex;
   flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: center;
 }
 
 .header-searchForm input {
@@ -279,10 +281,11 @@ img {
 
 .trendingPreview-movieList,
 .liked-movieList{
+  height: 241px;
+  min-width: 288px;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  height: 241px;
   padding-left: 24px;
   padding-bottom: 16px;
 }
