@@ -1,5 +1,3 @@
-
-
 // DATA
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
@@ -8,7 +6,7 @@ const api = axios.create({
   },
   params: {
     api_key: API_KEY,
-    "language": navigator.language || "es-ES"
+    language: navigator.language || "es-ES",
   },
 });
 
@@ -227,7 +225,7 @@ const createMovies = (
       movieFvoriteBtn.classList.toggle("movie-btn--liked");
       // PAra lcoal storage
       likeMovie(movie);
-      getLikedMovies()
+      getLikedMovies();
     });
 
     if (lazyLoad) {
@@ -281,3 +279,18 @@ const createCategories = (categories, container) => {
 // }
 
 // solution(45);
+
+
+// const producto = {
+//   nombre: 'manzana',
+//   categoria: 'frutas',
+//   precio: 1.99
+// }
+
+// const readObjet = (obj) => {
+//   for (const iterator in obj) {
+//     console.log(obj[iterator]);
+//   }
+// }
+
+// readObjet(producto)

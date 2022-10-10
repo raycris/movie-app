@@ -1,0 +1,27 @@
+html {
+  width: 100%;
+}
+
+.trendingPreview-movieList,
+.liked-movieList {
+  height: auto;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.genericList-container {
+  gap: 6px;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.movie-container {
+  min-width: 150px;
+  max-width: 150px;
+  margin-bottom: 12px;
+}
